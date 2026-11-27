@@ -45,12 +45,3 @@ Client sends JOIN -> server replies WELCOME and the player list -> host starts -
 server sends ROUND_START and a TICK every second -> client sends GUESS -> server
 replies FEEDBACK and updates the ranking -> ROUND_END -> after the last round, MATCH_END.
 
-## Likely viva questions
-- **Why is the answer kept only on the server?** So clients cannot read it or fake scores.
-- **Why synchronized?** Client threads and the timer change the same game state.
-- **Why SwingUtilities.invokeLater?** Swing components must be updated on the event thread.
-- **Why a writer thread per connection?** A slow player must not delay the others.
-- **How is a dropped network detected?** Both sides send PING; 15 seconds of silence closes the connection.
-- **Why an ObjectInputFilter?** Deserializing unknown classes from a network is unsafe.
-- **Limitations:** traffic is not encrypted, so use it on a trusted local network.
-  The game ends if the host closes the app.
